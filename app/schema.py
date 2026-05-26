@@ -1,6 +1,6 @@
 from .database import Base
 from .models import User, Task
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, Any
 from datetime import datetime
 
@@ -18,11 +18,11 @@ class UserOut(BaseModel):
 
 class TaskCreate(BaseModel):
     task_type: str
-    payload: dict = {}
+    payload: dict = Field(default_factory=dict)
 
 
 class TaskOut(BaseModel):
-    id: str
+    id: int
     task_type: str
     status: str
     result: Optional[Any] = None

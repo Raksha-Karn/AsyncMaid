@@ -7,9 +7,10 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 Base = declarative_base()
+engine = create_engine(DATABASE_URL)
+
 SessionLocal = sessionmaker(bind=engine, autoflush=False)
 
-engine = create_engine(DATABASE_URL)
 def get_db():
     db = SessionLocal()
     try:
