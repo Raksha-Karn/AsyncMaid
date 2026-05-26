@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from jose import JWTError, jwt
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, UTC
 from dotenv import load_dotenv
 from . import models
 from .database import get_db
@@ -24,7 +24,7 @@ def verify_password(plain_password, hashed_password) -> bool:
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
-    expires = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=30))
+    expires = datetime.now(UTC) + (expires_delta or timedelta(minutes=30))
     to_encode.update({"exp": expires})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
