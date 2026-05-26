@@ -16,7 +16,7 @@ class User(Base):
 
 class Task(Base):
     __tablename__ = "tasks"
-    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    id: Mapped[str] = mapped_column(primary_key=True, index=True)
     task_type: Mapped[str] = mapped_column()
     status: Mapped[str] = mapped_column(default="pending")
     result: Mapped[dict | None] = mapped_column(JSON, nullable=True)
