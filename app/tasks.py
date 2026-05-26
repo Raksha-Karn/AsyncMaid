@@ -1,5 +1,6 @@
 from .celery_app import celery_app
 from datetime import datetime, UTC
+from sqlalchemy import select
 from .database import SessionLocal
 from . import models
 import time, random
@@ -7,7 +8,7 @@ import time, random
 def _update_task(task_id: str, status: str, result = None, error = None):
     db = SessionLocal()
     try:
-        task = db.query(models.Task).filter(models.Task.id == task_id).first()
+        task = db.execute(select(models.Task).where(models.Task.id == task_id)).scalar_one_or_none()
         if not task:
             raise ValueError(f"Task {task_id} not found")
         task.status = status
