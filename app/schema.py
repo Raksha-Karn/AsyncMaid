@@ -22,7 +22,7 @@ class TaskCreate(BaseModel):
 
 
 class TaskOut(BaseModel):
-    id: int
+    id: str
     task_type: str
     status: str
     result: Optional[Any] = None
