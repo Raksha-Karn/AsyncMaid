@@ -111,7 +111,6 @@ tailwind.config = {
 </head>
 <body class="min-h-screen">
 
-<!-- AUTH -->
 <div id="auth-screen" class="min-h-screen flex items-center justify-center p-4 bg-cream-50">
   <div class="w-full max-w-sm">
     <div class="text-center mb-10">
@@ -146,11 +145,8 @@ tailwind.config = {
   </div>
 </div>
 
-<!-- APP SHELL -->
 <div id="app-shell" class="hidden min-h-screen" style="display:none">
   <div class="flex min-h-screen">
-
-    <!-- Sidebar -->
     <aside id="sidebar" class="w-56 shrink-0 border-r border-cream-200 flex flex-col h-screen sticky top-0 bg-cream-50">
       <div class="px-5 py-5 border-b border-cream-200 flex items-center gap-3">
         <div class="w-8 h-8 rounded-xl bg-sage-600 flex items-center justify-center shrink-0">
@@ -214,7 +210,6 @@ tailwind.config = {
           </button>
         </div>
 
-        <!-- Stats -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           <div class="metric-card"><p class="text-xs text-ink-400 mb-1">Total</p><p class="text-2xl font-semibold text-ink-800" id="metric-total">—</p></div>
           <div class="metric-card"><p class="text-xs text-ink-400 mb-1">Succeeded</p><p class="text-2xl font-semibold text-sage-600" id="metric-success">—</p></div>
@@ -222,7 +217,6 @@ tailwind.config = {
           <div class="metric-card"><p class="text-xs text-ink-400 mb-1">Failed</p><p class="text-2xl font-semibold text-blush-500" id="metric-failed">—</p></div>
         </div>
 
-        <!-- Quick actions -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
           <button onclick="goNewTask('generate_report')" class="card p-5 text-left hover:border-sage-300 transition-colors">
             <div class="w-9 h-9 rounded-xl bg-sage-100 flex items-center justify-center mb-3"><svg class="w-5 h-5 text-sage-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
@@ -241,7 +235,6 @@ tailwind.config = {
           </button>
         </div>
 
-        <!-- All tasks on dashboard -->
         <div class="mb-4 flex items-center justify-between">
           <h3 class="text-xs font-semibold text-ink-500 uppercase tracking-widest">All Tasks</h3>
           <div class="flex gap-1">
@@ -257,7 +250,6 @@ tailwind.config = {
         </div>
       </div>
 
-      <!-- ── TASK DETAIL ── -->
       <div id="page-task-detail" class="page p-6 md:p-10 max-w-3xl mx-auto">
         <button onclick="showPage('dashboard')" class="flex items-center gap-2 text-sm text-ink-400 hover:text-ink-700 mb-6 transition-colors">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -266,14 +258,12 @@ tailwind.config = {
         <div id="task-detail-content"></div>
       </div>
 
-      <!-- ── NEW TASK ── -->
       <div id="page-new-task" class="page p-6 md:p-10 max-w-2xl mx-auto">
         <div class="mb-6">
           <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">New Task</h2>
           <p class="text-sm text-ink-400 mt-0.5">Submit a background job to the queue</p>
         </div>
         <div class="card p-6 md:p-8">
-          <!-- Type picker -->
           <div class="mb-6">
             <label class="block text-xs font-medium text-ink-500 mb-2">Task type</label>
             <div class="grid grid-cols-3 gap-2" id="type-picker">
@@ -291,7 +281,6 @@ tailwind.config = {
               </button>
             </div>
           </div>
-          <!-- Fields rendered here -->
           <div id="task-fields" class="space-y-4"></div>
           <button onclick="submitTask()" class="btn-primary w-full mt-6 flex items-center justify-center gap-2" id="submit-task-btn">
             <span id="submit-task-text">Submit task</span>
@@ -299,7 +288,6 @@ tailwind.config = {
         </div>
       </div>
 
-      <!-- ── UPLOADS ── -->
       <div id="page-uploads" class="page p-6 md:p-10 max-w-3xl mx-auto">
         <div class="mb-6">
           <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">CSV Uploads</h2>
@@ -331,8 +319,7 @@ tailwind.config = {
 </div>
 
 <script>
-// ─── CONFIG ─────────────────────────────────────────
-const API = ''; // set to 'http://localhost:8000' if needed
+const API = window.location.origin;
 let token = localStorage.getItem('asyncmaid_token') || null;
 let currentUser = localStorage.getItem('asyncmaid_email') || null;
 let allTasks = [];
@@ -340,12 +327,10 @@ let uploads = [];
 let currentTaskType = 'generate_report';
 let dashFilter = 'all';
 
-// ─── INIT ────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   if (token) showApp();
 });
 
-// ─── AUTH ────────────────────────────────────────────
 let authMode = 'login';
 
 function switchAuthTab(mode) {
@@ -400,19 +385,14 @@ function showApp() {
   document.getElementById('user-email-display').textContent = currentUser || '';
   const name = (currentUser || '').split('@')[0];
   document.getElementById('dashboard-name').textContent = name ? name.charAt(0).toUpperCase() + name.slice(1) : '';
-  // Render task fields for default type now that DOM is ready
   renderTaskFields('generate_report');
   loadDashboard();
   startTokenWatcher();
 }
-
-// ─── TOKEN EXPIRY WATCHER ─────────────────────────────
-// Reads the exp claim from the JWT and silently logs out before it expires,
-// showing a clear message so the user isn't confused by a 401.
 function getTokenExp(jwt) {
   try {
     const payload = JSON.parse(atob(jwt.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
-    return payload.exp ? payload.exp * 1000 : null; // convert to ms
+    return payload.exp ? payload.exp * 1000 : null; 
   } catch { return null; }
 }
 
@@ -421,15 +401,13 @@ function startTokenWatcher() {
   clearTimeout(_tokenWatcherTimer);
   if (!token) return;
   const exp = getTokenExp(token);
-  if (!exp) return; // no exp claim — nothing to watch
+  if (!exp) return; 
   const now = Date.now();
   const msLeft = exp - now;
   if (msLeft <= 0) { logout(); return; }
-  // Warn at 60 seconds before expiry, then logout at expiry
   const warnAt = Math.max(msLeft - 60_000, 0);
   _tokenWatcherTimer = setTimeout(() => {
     showToast('Session expiring soon — please save your work.', '');
-    // Hard logout at actual expiry
     setTimeout(() => {
       showToast('Session expired. Please sign in again.', 'error');
       logout();
@@ -445,7 +423,6 @@ function logout() {
   document.getElementById('auth-screen').style.display = '';
 }
 
-// ─── NAVIGATION ──────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -455,27 +432,22 @@ function showPage(name) {
   if (nav) nav.classList.add('active');
   if (name === 'dashboard') loadDashboard();
   if (name === 'uploads') loadUploads();
-  // When navigating to new-task via sidebar, re-sync the type button highlight
   if (name === 'new-task') {
-    // Use setTimeout so the page is visible before we touch its buttons
     setTimeout(() => syncTypeButtons(currentTaskType), 0);
   }
 }
 
-// Sync type button highlights without re-rendering fields (call after page is shown)
 function syncTypeButtons(type) {
   document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
   const btn = document.getElementById('type-' + type);
   if (btn) btn.classList.add('selected');
 }
 
-// Navigate to new-task with a pre-selected type
 function goNewTask(type) {
-  showPage('new-task');  // show page first so type-btn elements are visible
-  setTaskType(type);     // highlight button + render fields (no recursion — setTaskType->renderTaskFields only)
+  showPage('new-task');  
+  setTaskType(type);    
 }
 
-// ─── API HELPER ──────────────────────────────────────
 async function apiCall(path, method = 'GET', body = null) {
   const opts = { method, headers: { 'Content-Type': 'application/json' } };
   if (token) opts.headers['Authorization'] = 'Bearer ' + token;
@@ -491,7 +463,6 @@ async function apiCall(path, method = 'GET', body = null) {
   }
 }
 
-// ─── DASHBOARD ───────────────────────────────────────
 async function loadDashboard() {
   const tasks = await apiCall('/tasks/my-tasks?limit=100');
   if (tasks._error) { showToast(tasks._error, 'error'); return; }
@@ -550,7 +521,6 @@ function buildTaskRow(task) {
   return row;
 }
 
-// ─── TASK DETAIL ─────────────────────────────────────
 async function openTask(id) {
   showPage('task-detail');
   const el = document.getElementById('task-detail-content');
@@ -597,8 +567,6 @@ async function confirmDelete(id) {
   showPage('dashboard');
 }
 
-// ─── NEW TASK ────────────────────────────────────────
-// setTaskType: ONLY updates state + button highlight, does NOT call renderTaskFields
 function setTaskType(type) {
   currentTaskType = type;
   document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
@@ -607,10 +575,9 @@ function setTaskType(type) {
   renderTaskFields(type);
 }
 
-// renderTaskFields: ONLY renders fields DOM, does NOT call setTaskType
 function renderTaskFields(type) {
   const el = document.getElementById('task-fields');
-  if (!el) return; // guard: DOM not ready yet
+  if (!el) return; 
 
   if (type === 'generate_report') {
     el.innerHTML = `
@@ -669,7 +636,6 @@ async function submitTask() {
 
   let payload = {};
 
-  // Validate & build payload per type
   if (currentTaskType === 'generate_report') {
     const name     = document.getElementById('f-name')?.value.trim() || '';
     const summary  = document.getElementById('f-summary')?.value.trim() || '';
@@ -720,7 +686,6 @@ async function submitTask() {
     const res = await apiCall('/tasks', 'POST', { task_type: currentTaskType, payload });
     if (res._error) { showToast(res._error, 'error'); return; }
     showToast('Task submitted successfully!', 'success');
-    // Reset form
     renderTaskFields(currentTaskType);
     showPage('dashboard');
   } finally {
@@ -729,7 +694,6 @@ async function submitTask() {
   }
 }
 
-// ─── UPLOADS ─────────────────────────────────────────
 function loadUploads() {
   if (uploads.length) renderUploadsList();
 }
@@ -795,7 +759,6 @@ async function uploadFile(file) {
   }
 }
 
-// ─── UTILITIES ───────────────────────────────────────
 function typeLabel(t) {
   return { generate_report:'Generate Report', process_data:'Process Data', send_email:'Send Email' }[t] || t;
 }
