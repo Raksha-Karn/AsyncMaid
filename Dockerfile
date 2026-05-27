@@ -15,4 +15,6 @@ COPY . .
 
 RUN uv sync --frozen
 
+RUN mkdir -p /storage
+
 EXPOSE 8000
