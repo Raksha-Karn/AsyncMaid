@@ -9,3 +9,7 @@ wheels/
 # Virtual environments
 .venv
 .env
+test_auth.db
+test_main.db
+test.db
+.coverage
