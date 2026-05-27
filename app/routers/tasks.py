@@ -1,14 +1,15 @@
 from sqlalchemy import select
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
 from sqlalchemy.orm import Session
 import os, uuid
 from redis import Redis
-from app.models import User, Task
+from app.models import Task, UploadedFile
 from dotenv import load_dotenv
-from app.schema import TaskOut, TaskCreate
+from app.schema import TaskOut, TaskCreate, UploadedFileOut
 from app.auth import decode_token
 from app.database import get_db
 from app.tasks import process_task
+from app.services.uploads import store_csv_upload
 
 load_dotenv()
 
@@ -35,6 +36,18 @@ def check_rate_limit(user_email: str):
 def submit_task(data: TaskCreate, db: Session = Depends(get_db), user = Depends(decode_token)):
     if data.task_type not in VALID_TASK_TYPES:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid task type. Choose from {VALID_TASK_TYPES}")
+    if data.task_type == "process_data":
+        upload_id = data.payload.get("upload_id")
+        if not upload_id:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="process_data requires payload.upload_id")
+        uploaded_file = db.execute(
+            select(UploadedFile).where(
+                UploadedFile.id == upload_id,
+                UploadedFile.owner_id == user.id,
+            )
+        ).scalar_one_or_none()
+        if uploaded_file is None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Uploaded CSV file not found")
     check_rate_limit(user.email)
 
     task_id = str(uuid.uuid4())
@@ -51,6 +64,10 @@ def submit_task(data: TaskCreate, db: Session = Depends(get_db), user = Depends(
         task_id=task_id
     )
     return task_record
+
+@router.post("/uploads", response_model=UploadedFileOut, status_code=201)
+async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db), user = Depends(decode_token)):
+    return await store_csv_upload(db, file=file, owner_id=user.id)
 
 @router.get("/my-tasks", response_model=list[TaskOut])
 def my_tasks(skip: int = 0, limit: int = 20, db: Session = Depends(get_db), user = Depends(decode_token)):
