@@ -12,6 +12,7 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     tasks: Mapped[list["Task"]] = relationship(back_populates="owner", cascade="all, delete-orphan")
+    uploaded_files: Mapped[list["UploadedFile"]] = relationship(back_populates="owner", cascade="all, delete-orphan")
 
 
 class Task(Base):
@@ -25,3 +26,15 @@ class Task(Base):
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     owner: Mapped["User"] = relationship(back_populates="tasks")
+
+
+class UploadedFile(Base):
+    __tablename__ = "uploaded_files"
+    id: Mapped[str] = mapped_column(primary_key=True, index=True)
+    original_filename: Mapped[str] = mapped_column()
+    storage_path: Mapped[str] = mapped_column()
+    size_bytes: Mapped[int] = mapped_column()
+    content_type: Mapped[str | None] = mapped_column(nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    owner: Mapped["User"] = relationship(back_populates="uploaded_files")

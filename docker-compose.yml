@@ -1,8 +1,6 @@
 services:
   redis:
     image: redis:7-alpine
-    ports:
-      - "6379:6379"
 
   db:
     image: postgres:15
@@ -32,6 +30,7 @@ services:
       - db
     volumes:
       - .:/app
+      - storage_data:/storage
 
   worker:
     build: .
@@ -44,6 +43,8 @@ services:
       - db
     volumes:
       - .:/app
+      - storage_data:/storage
 
 volumes:
   postgres_data:
+  storage_data:
