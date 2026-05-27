@@ -2,7 +2,7 @@
 
 # 🫧 AsyncMaid
 
-A lightweight but fully-featured async task runner. It accepts jobs through a clean REST API, queues them via Celery + Redis, processes them asynchronously, and stores results in a PostgreSQL database + 93% test overage :)
+A lightweight but fully-featured async task runner. It accepts jobs through a clean REST API, queues them via Celery + Redis, processes them asynchronously, and stores results in a PostgreSQL database + **93% test overage :)**
 
 > **Three task types out of the box:**
 > `generate_report` · `process_data` · `send_email`
