@@ -35,3 +35,12 @@ class TaskOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class UploadedFileOut(BaseModel):
+    id: str
+    original_filename: str
+    size_bytes: int
+    content_type: Optional[str] = None
+    created_at: datetime
+    model_config = {"from_attributes": True}
