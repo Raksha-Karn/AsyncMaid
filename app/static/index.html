@@ -12,10 +12,7 @@
 tailwind.config = {
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['DM Sans', 'sans-serif'],
-        mono: ['DM Mono', 'monospace'],
-      },
+      fontFamily: { sans: ['DM Sans', 'sans-serif'], mono: ['DM Mono', 'monospace'] },
       colors: {
         cream: { 50: '#fdfcf8', 100: '#f8f5ee', 200: '#f0ead8', 300: '#e4d9be' },
         sage:  { 50: '#f2f5f0', 100: '#dde6d8', 200: '#b8ccae', 300: '#8aaa80', 400: '#5e8852', 500: '#446b3a', 600: '#2f5027', 700: '#1e3519' },
@@ -23,13 +20,13 @@ tailwind.config = {
         blush: { 100: '#fce8e4', 200: '#f8c4bb', 300: '#f09585', 400: '#e06650', 500: '#c44832' },
       },
       animation: {
-        'fade-in': 'fadeIn 0.35s ease forwards',
+        'fade-in': 'fadeIn 0.3s ease forwards',
         'slide-up': 'slideUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards',
-        'spin-slow': 'spin 1.4s linear infinite',
+        'spin-slow': 'spin 1s linear infinite',
       },
       keyframes: {
         fadeIn:  { from: { opacity: '0' }, to: { opacity: '1' } },
-        slideUp: { from: { opacity: '0', transform: 'translateY(16px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+        slideUp: { from: { opacity: '0', transform: 'translateY(12px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
       },
     }
   }
@@ -38,109 +35,105 @@ tailwind.config = {
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   body { font-family: 'DM Sans', sans-serif; background: #fdfcf8; color: #141210; }
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #f0ead8; }
   ::-webkit-scrollbar-thumb { background: #c9c3b8; border-radius: 999px; }
 
   .page { display: none; }
-  .page.active { display: block; }
+  .page.active { display: block; animation: fadeIn 0.25s ease forwards; }
 
-  .nav-item.active { background: #dde6d8; color: #2f5027; }
-  .nav-item.active svg { color: #446b3a; }
+  .nav-item { width:100%; display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:12px; font-size:14px; font-weight:500; color:#3a3330; cursor:pointer; border:none; background:transparent; font-family:'DM Sans',sans-serif; transition:background 0.15s, color 0.15s; text-align:left; }
+  .nav-item:hover { background:#f0ead8; }
+  .nav-item.active { background:#dde6d8; color:#2f5027; }
+  .nav-item.active .nav-icon { color:#446b3a; }
+  .nav-icon { width:16px; height:16px; color:#a89d8e; flex-shrink:0; transition:color 0.15s; }
 
-  .input-base {
-    width: 100%; background: #f8f5ee; border: 1px solid #e4d9be;
-    border-radius: 10px; padding: 10px 14px; font-family: 'DM Sans', sans-serif;
-    font-size: 14px; color: #141210; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .input-base:focus { border-color: #8aaa80; box-shadow: 0 0 0 3px rgba(138,170,128,0.15); }
-  .input-base::placeholder { color: #a89d8e; }
+  .input-base { width:100%; background:#f8f5ee; border:1px solid #e4d9be; border-radius:10px; padding:10px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:#141210; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+  .input-base:focus { border-color:#8aaa80; box-shadow:0 0 0 3px rgba(138,170,128,0.15); }
+  .input-base::placeholder { color:#a89d8e; }
+  textarea.input-base { resize:vertical; min-height:80px; }
 
-  .btn-primary {
-    background: #2f5027; color: #f8f5ee; border-radius: 10px; padding: 10px 22px;
-    font-weight: 500; font-size: 14px; border: none; cursor: pointer;
-    transition: background 0.2s, transform 0.1s; font-family: 'DM Sans', sans-serif;
-  }
-  .btn-primary:hover { background: #1e3519; }
-  .btn-primary:active { transform: scale(0.98); }
-  .btn-primary:disabled { background: #b8ccae; cursor: not-allowed; }
+  .btn-primary { background:#2f5027; color:#f8f5ee; border-radius:10px; padding:10px 22px; font-weight:500; font-size:14px; border:none; cursor:pointer; transition:background 0.2s, transform 0.1s; font-family:'DM Sans',sans-serif; }
+  .btn-primary:hover { background:#1e3519; }
+  .btn-primary:active { transform:scale(0.98); }
+  .btn-primary:disabled { background:#b8ccae; cursor:not-allowed; }
 
-  .btn-ghost {
-    background: transparent; border: 1px solid #e4d9be; color: #524840;
-    border-radius: 10px; padding: 10px 18px; font-weight: 400; font-size: 14px;
-    cursor: pointer; transition: background 0.2s, border-color 0.2s; font-family: 'DM Sans', sans-serif;
-  }
-  .btn-ghost:hover { background: #f0ead8; border-color: #c9c3b8; }
+  .btn-ghost { background:transparent; border:1px solid #e4d9be; color:#524840; border-radius:10px; padding:8px 16px; font-weight:400; font-size:13px; cursor:pointer; transition:background 0.2s, border-color 0.2s; font-family:'DM Sans',sans-serif; display:inline-flex; align-items:center; gap:6px; }
+  .btn-ghost:hover { background:#f0ead8; border-color:#c9c3b8; }
 
-  .card {
-    background: #fff; border: 1px solid #ede8de; border-radius: 16px; overflow: hidden;
-  }
+  .card { background:#fff; border:1px solid #ede8de; border-radius:16px; overflow:hidden; }
 
-  .badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 500;
-  }
-  .badge-pending  { background: #f0ead8; color: #776b5a; }
-  .badge-started  { background: #dde6d8; color: #2f5027; }
-  .badge-success  { background: #d1e8c8; color: #1e3519; }
-  .badge-failure  { background: #fce8e4; color: #c44832; }
+  .badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:500; }
+  .badge-pending  { background:#f0ead8; color:#776b5a; }
+  .badge-started  { background:#dde6d8; color:#2f5027; }
+  .badge-success  { background:#d1e8c8; color:#1e3519; }
+  .badge-failure  { background:#fce8e4; color:#c44832; }
 
+  /* Toast — top center, bold and hard to miss */
   .toast {
-    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-    background: #221f1c; color: #f8f5ee; padding: 12px 18px; border-radius: 12px;
-    font-size: 13px; max-width: 320px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
+    position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:99999;
+    display:flex; align-items:center; gap:10px;
+    background:#221f1c; color:#f8f5ee; padding:12px 20px; border-radius:14px;
+    font-size:14px; font-weight:500; max-width:420px; width:max-content;
+    box-shadow:0 12px 40px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12);
+    animation: slideUp 0.25s cubic-bezier(0.16,1,0.3,1) forwards;
+    pointer-events:none;
   }
-  .toast.error { background: #c44832; }
-  .toast.success { background: #446b3a; }
+  .toast.error { background:#c44832; }
+  .toast.success { background:#2f5027; }
 
-  .tab-btn { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.15s, color 0.15s; border: none; background: transparent; color: #776b5a; font-family: 'DM Sans', sans-serif; }
-  .tab-btn.active { background: #dde6d8; color: #2f5027; }
+  .tab-btn { padding:7px 14px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer; transition:background 0.15s, color 0.15s; border:none; background:transparent; color:#776b5a; font-family:'DM Sans',sans-serif; }
+  .tab-btn.active { background:#dde6d8; color:#2f5027; }
 
-  .result-block { background: #f4f3f1; border-radius: 10px; padding: 14px; font-family: 'DM Mono', monospace; font-size: 12px; color: #524840; overflow-x: auto; white-space: pre-wrap; word-break: break-all; max-height: 320px; overflow-y: auto; }
+  .result-block { background:#f4f3f1; border-radius:10px; padding:14px; font-family:'DM Mono',monospace; font-size:12px; color:#524840; overflow-x:auto; white-space:pre-wrap; word-break:break-all; max-height:340px; overflow-y:auto; }
 
-  .drop-zone { border: 2px dashed #c9c3b8; border-radius: 12px; padding: 32px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-  .drop-zone:hover, .drop-zone.drag-over { border-color: #8aaa80; background: #f2f5f0; }
+  .drop-zone { border:2px dashed #c9c3b8; border-radius:12px; padding:28px; text-align:center; cursor:pointer; transition:border-color 0.2s, background 0.2s; }
+  .drop-zone:hover, .drop-zone.drag-over { border-color:#8aaa80; background:#f2f5f0; }
 
-  .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin-slow 0.9s linear infinite; display: inline-block; }
+  .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.9s linear infinite; display:inline-block; flex-shrink:0; }
+  .spinner-dark { width:16px; height:16px; border:2px solid rgba(47,80,39,0.2); border-top-color:#2f5027; border-radius:50%; animation:spin 0.9s linear infinite; display:inline-block; flex-shrink:0; }
+  @keyframes spin { to { transform:rotate(360deg); } }
 
-  textarea.input-base { resize: vertical; min-height: 80px; }
+  .metric-card { background:#f8f5ee; border:1px solid #ede8de; border-radius:12px; padding:16px 18px; }
 
-  .metric-card { background: #f8f5ee; border: 1px solid #ede8de; border-radius: 12px; padding: 16px 18px; }
+  .type-btn { padding:12px 8px; border-radius:12px; border:1px solid #e4d9be; text-align:center; font-size:12px; font-weight:500; color:#524840; cursor:pointer; background:#fff; transition:border-color 0.15s, background 0.15s, color 0.15s; font-family:'DM Sans',sans-serif; }
+  .type-btn:hover { border-color:#8aaa80; background:#f2f5f0; }
+  .type-btn.selected { border-color:#5e8852; background:#dde6d8; color:#2f5027; }
+  .type-btn svg { color:#a89d8e; transition:color 0.15s; margin:0 auto 6px; display:block; }
+  .type-btn.selected svg { color:#446b3a; }
 
-  @media (max-width: 768px) {
-    #sidebar { display: none; }
-    #mobile-nav { display: flex; }
-  }
-  #mobile-nav { display: none; }
+  .task-row { cursor:pointer; transition:border-color 0.15s, background 0.15s; }
+  .task-row:hover { background:#fdfcf8; border-color:#c9c3b8; }
+
+  @media (max-width:768px) { #sidebar { display:none !important; } #mobile-nav { display:flex !important; } }
+  #mobile-nav { display:none; }
 </style>
 </head>
 <body class="min-h-screen">
 
-<div id="auth-screen" class="min-h-screen flex items-center justify-center p-4">
-  <div class="w-full max-w-sm animate-fade-in">
+<!-- AUTH -->
+<div id="auth-screen" class="min-h-screen flex items-center justify-center p-4 bg-cream-50">
+  <div class="w-full max-w-sm">
     <div class="text-center mb-10">
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-sage-600 mb-4">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-sage-600 mb-4 shadow-lg">
         <svg class="w-7 h-7 text-cream-100" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.607L5 14.5m14.8.5l-1.39 6.526a1.5 1.5 0 01-1.47 1.224H7.06a1.5 1.5 0 01-1.47-1.224L4.2 15M5 14.5l-.39-.098"/></svg>
       </div>
       <h1 class="text-2xl font-semibold text-ink-800 tracking-tight">AsyncMaid</h1>
       <p class="text-sm text-ink-400 mt-1">Async task processing, beautifully simple</p>
     </div>
-
-    <div class="card p-8">
+    <div class="card p-8 shadow-sm">
       <div class="flex gap-1 bg-cream-100 p-1 rounded-xl mb-6">
         <button onclick="switchAuthTab('login')" id="tab-login" class="tab-btn active flex-1">Sign in</button>
         <button onclick="switchAuthTab('register')" id="tab-register" class="tab-btn flex-1">Register</button>
       </div>
-
       <form id="auth-form" onsubmit="handleAuth(event)">
         <div class="space-y-4">
           <div>
-            <label class="block text-xs font-500 text-ink-500 mb-1.5">Email</label>
+            <label class="block text-xs font-medium text-ink-500 mb-1.5">Email</label>
             <input type="email" id="auth-email" class="input-base" placeholder="you@example.com" required />
           </div>
           <div>
-            <label class="block text-xs font-500 text-ink-500 mb-1.5">Password</label>
+            <label class="block text-xs font-medium text-ink-500 mb-1.5">Password</label>
             <input type="password" id="auth-password" class="input-base" placeholder="••••••••" required />
           </div>
           <button type="submit" class="btn-primary w-full flex items-center justify-center gap-2 mt-2" id="auth-submit">
@@ -149,260 +142,210 @@ tailwind.config = {
         </div>
       </form>
     </div>
-    <p class="text-center text-xs text-ink-300 mt-6">AsyncMaid &copy; 2025 &mdash; All tasks handled with care</p>
+    <p class="text-center text-xs text-ink-300 mt-6">AsyncMaid &copy; 2025 — All tasks handled with care</p>
   </div>
 </div>
 
-<div id="app-shell" class="hidden min-h-screen flex">
+<!-- APP SHELL -->
+<div id="app-shell" class="hidden min-h-screen" style="display:none">
+  <div class="flex min-h-screen">
 
-  <aside id="sidebar" class="w-60 shrink-0 border-r border-cream-200 flex flex-col h-screen sticky top-0 bg-cream-50">
-    <div class="px-5 py-5 border-b border-cream-200 flex items-center gap-3">
-      <div class="w-8 h-8 rounded-xl bg-sage-600 flex items-center justify-center shrink-0">
-        <svg class="w-4 h-4 text-cream-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.22-.607L5 14.5m14.8.5l-1.39 6.526a1.5 1.5 0 01-1.47 1.224H7.06a1.5 1.5 0 01-1.47-1.224L4.2 15"/></svg>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-56 shrink-0 border-r border-cream-200 flex flex-col h-screen sticky top-0 bg-cream-50">
+      <div class="px-5 py-5 border-b border-cream-200 flex items-center gap-3">
+        <div class="w-8 h-8 rounded-xl bg-sage-600 flex items-center justify-center shrink-0">
+          <svg class="w-4 h-4 text-cream-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.22-.607L5 14.5m14.8.5l-1.39 6.526a1.5 1.5 0 01-1.47 1.224H7.06a1.5 1.5 0 01-1.47-1.224L4.2 15"/></svg>
+        </div>
+        <span class="font-semibold text-ink-800 tracking-tight">AsyncMaid</span>
       </div>
-      <span class="font-semibold text-ink-800 text-base tracking-tight">AsyncMaid</span>
-    </div>
-
-    <nav class="flex-1 px-3 py-4 space-y-1">
-      <button onclick="showPage('dashboard')" class="nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-ink-600 hover:bg-cream-100 transition-colors" data-page="dashboard">
-        <svg class="w-4 h-4 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        Dashboard
-      </button>
-      <button onclick="showPage('tasks')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-ink-600 hover:bg-cream-100 transition-colors" data-page="tasks">
-        <svg class="w-4 h-4 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        My Tasks
-      </button>
-      <button onclick="showPage('new-task')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-ink-600 hover:bg-cream-100 transition-colors" data-page="new-task">
-        <svg class="w-4 h-4 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8M8 12h8"/></svg>
-        New Task
-      </button>
-      <button onclick="showPage('uploads')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-ink-600 hover:bg-cream-100 transition-colors" data-page="uploads">
-        <svg class="w-4 h-4 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"/></svg>
-        Uploads
-      </button>
-    </nav>
-
-    <div class="px-4 py-4 border-t border-cream-200">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-sage-200 flex items-center justify-center">
-          <span class="text-xs font-600 text-sage-700" id="user-avatar-initials">--</span>
-        </div>
-        <div class="flex-1 min-w-0">
-          <p class="text-xs font-500 text-ink-700 truncate" id="user-email-display">--</p>
-          <p class="text-xs text-ink-400">Free plan</p>
-        </div>
-        <button onclick="logout()" title="Sign out" class="text-ink-400 hover:text-blush-500 transition-colors p-1">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      <nav class="flex-1 px-3 py-4 space-y-0.5">
+        <button onclick="showPage('dashboard')" class="nav-item active" data-page="dashboard">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
         </button>
-      </div>
-    </div>
-  </aside>
-
-  <main class="flex-1 overflow-y-auto">
-
-    <div id="mobile-nav" class="sticky top-0 z-20 bg-cream-50 border-b border-cream-200 px-4 py-3 flex items-center justify-between md:hidden">
-      <div class="flex items-center gap-2">
-        <div class="w-7 h-7 rounded-lg bg-sage-600 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-cream-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5"/></svg></div>
-        <span class="font-semibold text-ink-800 text-sm">AsyncMaid</span>
-      </div>
-      <div class="flex gap-1">
-        <button onclick="showPage('dashboard')" class="p-2 rounded-lg hover:bg-cream-100 text-ink-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
-        <button onclick="showPage('tasks')" class="p-2 rounded-lg hover:bg-cream-100 text-ink-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></button>
-        <button onclick="showPage('new-task')" class="p-2 rounded-lg hover:bg-cream-100 text-ink-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8M8 12h8"/></svg></button>
-        <button onclick="showPage('uploads')" class="p-2 rounded-lg hover:bg-cream-100 text-ink-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"/></svg></button>
-        <button onclick="logout()" class="p-2 rounded-lg hover:bg-cream-100 text-ink-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>
-      </div>
-    </div>
-
-    <div id="page-dashboard" class="page active p-6 md:p-10 max-w-4xl mx-auto animate-fade-in">
-      <div class="mb-8">
-        <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">Good to have you back <span id="dashboard-name" class="text-sage-500"></span></h2>
-        <p class="text-sm text-ink-400 mt-1">Here's what's running for you today.</p>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-        <div class="metric-card">
-          <p class="text-xs text-ink-400 mb-1">Total Tasks</p>
-          <p class="text-2xl font-semibold text-ink-800" id="metric-total">—</p>
-        </div>
-        <div class="metric-card">
-          <p class="text-xs text-ink-400 mb-1">Succeeded</p>
-          <p class="text-2xl font-semibold text-sage-600" id="metric-success">—</p>
-        </div>
-        <div class="metric-card">
-          <p class="text-xs text-ink-400 mb-1">In Progress</p>
-          <p class="text-2xl font-semibold text-ink-600" id="metric-running">—</p>
-        </div>
-        <div class="metric-card">
-          <p class="text-xs text-ink-400 mb-1">Failed</p>
-          <p class="text-2xl font-semibold text-blush-500" id="metric-failed">—</p>
-        </div>
-      </div>
-
-      <div class="mb-4 flex items-center justify-between">
-        <h3 class="text-sm font-semibold text-ink-600 uppercase tracking-widest">Recent Activity</h3>
-        <button onclick="showPage('tasks')" class="text-xs text-sage-500 hover:text-sage-700 font-medium">View all →</button>
-      </div>
-      <div id="dashboard-recent" class="space-y-2">
-        <div class="text-sm text-ink-400 py-8 text-center">Loading…</div>
-      </div>
-
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3">
-        <button onclick="showPage('new-task'); setTaskType('generate_report')" class="card p-5 text-left hover:border-sage-300 transition-colors group">
-          <div class="w-9 h-9 rounded-xl bg-sage-100 flex items-center justify-center mb-3">
-            <svg class="w-4.5 h-4.5 text-sage-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <button onclick="showPage('new-task')" class="nav-item" data-page="new-task">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8M8 12h8"/></svg>
+          New Task
+        </button>
+        <button onclick="showPage('uploads')" class="nav-item" data-page="uploads">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"/></svg>
+          Uploads
+        </button>
+      </nav>
+      <div class="px-4 py-4 border-t border-cream-200">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-sage-200 flex items-center justify-center shrink-0">
+            <span class="text-xs font-semibold text-sage-700" id="user-avatar-initials">--</span>
           </div>
-          <p class="font-medium text-ink-700 text-sm">Generate Report</p>
-          <p class="text-xs text-ink-400 mt-0.5">From metrics or a CSV file</p>
-        </button>
-        <button onclick="showPage('new-task'); setTaskType('process_data')" class="card p-5 text-left hover:border-sage-300 transition-colors group">
-          <div class="w-9 h-9 rounded-xl bg-cream-200 flex items-center justify-center mb-3">
-            <svg class="w-4.5 h-4.5 text-ink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16M8 11h8M8 15h5"/></svg>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-medium text-ink-700 truncate" id="user-email-display">--</p>
           </div>
-          <p class="font-medium text-ink-700 text-sm">Process CSV Data</p>
-          <p class="text-xs text-ink-400 mt-0.5">Upload and analyze a dataset</p>
-        </button>
-        <button onclick="showPage('new-task'); setTaskType('send_email')" class="card p-5 text-left hover:border-sage-300 transition-colors group">
-          <div class="w-9 h-9 rounded-xl bg-blush-100 flex items-center justify-center mb-3">
-            <svg class="w-4.5 h-4.5 text-blush-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          </div>
-          <p class="font-medium text-ink-700 text-sm">Send Email</p>
-          <p class="text-xs text-ink-400 mt-0.5">Dispatch an async notification</p>
-        </button>
-      </div>
-    </div>
-
-    <div id="page-tasks" class="page p-6 md:p-10 max-w-4xl mx-auto animate-fade-in">
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">My Tasks</h2>
-          <p class="text-sm text-ink-400 mt-0.5">All your submitted background jobs</p>
+          <button onclick="logout()" title="Sign out" class="text-ink-300 hover:text-blush-500 transition-colors p-1 rounded-lg hover:bg-blush-100">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </button>
         </div>
-        <button onclick="loadTasks()" class="btn-ghost flex items-center gap-2 text-xs">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4.93 9A8 8 0 1119.07 15"/></svg>
-          Refresh
+      </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto min-h-screen">
+
+      <div id="mobile-nav" class="sticky top-0 z-20 bg-cream-50 border-b border-cream-200 px-4 py-3 items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-sage-600 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-cream-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5"/></svg></div>
+          <span class="font-semibold text-ink-800 text-sm">AsyncMaid</span>
+        </div>
+        <div class="flex gap-1">
+          <button onclick="showPage('dashboard')" class="p-2 rounded-lg hover:bg-cream-100 text-ink-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+          <button onclick="showPage('new-task')" class="p-2 rounded-lg hover:bg-cream-100 text-ink-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8M8 12h8"/></svg></button>
+          <button onclick="showPage('uploads')" class="p-2 rounded-lg hover:bg-cream-100 text-ink-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"/></svg></button>
+          <button onclick="logout()" class="p-2 rounded-lg hover:bg-cream-100 text-ink-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>
+        </div>
+      </div>
+
+      <div id="page-dashboard" class="page active p-6 md:p-10 max-w-4xl mx-auto">
+        <div class="mb-8 flex items-start justify-between">
+          <div>
+            <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">Welcome back, <span id="dashboard-name" class="text-sage-500"></span></h2>
+            <p class="text-sm text-ink-400 mt-1">Here's what's running for you.</p>
+          </div>
+          <button onclick="loadDashboard()" class="btn-ghost mt-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4.93 9A8 8 0 1119.07 15"/></svg>
+            Refresh
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div class="metric-card"><p class="text-xs text-ink-400 mb-1">Total</p><p class="text-2xl font-semibold text-ink-800" id="metric-total">—</p></div>
+          <div class="metric-card"><p class="text-xs text-ink-400 mb-1">Succeeded</p><p class="text-2xl font-semibold text-sage-600" id="metric-success">—</p></div>
+          <div class="metric-card"><p class="text-xs text-ink-400 mb-1">Running</p><p class="text-2xl font-semibold text-ink-600" id="metric-running">—</p></div>
+          <div class="metric-card"><p class="text-xs text-ink-400 mb-1">Failed</p><p class="text-2xl font-semibold text-blush-500" id="metric-failed">—</p></div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          <button onclick="goNewTask('generate_report')" class="card p-5 text-left hover:border-sage-300 transition-colors">
+            <div class="w-9 h-9 rounded-xl bg-sage-100 flex items-center justify-center mb-3"><svg class="w-5 h-5 text-sage-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+            <p class="font-medium text-ink-700 text-sm">Generate Report</p>
+            <p class="text-xs text-ink-400 mt-0.5">From metrics or a CSV file</p>
+          </button>
+          <button onclick="goNewTask('process_data')" class="card p-5 text-left hover:border-sage-300 transition-colors">
+            <div class="w-9 h-9 rounded-xl bg-cream-200 flex items-center justify-center mb-3"><svg class="w-5 h-5 text-ink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16M8 11h8M8 15h5"/></svg></div>
+            <p class="font-medium text-ink-700 text-sm">Process CSV Data</p>
+            <p class="text-xs text-ink-400 mt-0.5">Upload and analyze a dataset</p>
+          </button>
+          <button onclick="goNewTask('send_email')" class="card p-5 text-left hover:border-sage-300 transition-colors">
+            <div class="w-9 h-9 rounded-xl bg-blush-100 flex items-center justify-center mb-3"><svg class="w-5 h-5 text-blush-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+            <p class="font-medium text-ink-700 text-sm">Send Email</p>
+            <p class="text-xs text-ink-400 mt-0.5">Dispatch an async notification</p>
+          </button>
+        </div>
+
+        <!-- All tasks on dashboard -->
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="text-xs font-semibold text-ink-500 uppercase tracking-widest">All Tasks</h3>
+          <div class="flex gap-1">
+            <button onclick="filterDash('all')" id="df-all" class="tab-btn active">All</button>
+            <button onclick="filterDash('SUCCESS')" id="df-SUCCESS" class="tab-btn">Done</button>
+            <button onclick="filterDash('PENDING')" id="df-PENDING" class="tab-btn">Pending</button>
+            <button onclick="filterDash('STARTED')" id="df-STARTED" class="tab-btn">Running</button>
+            <button onclick="filterDash('FAILURE')" id="df-FAILURE" class="tab-btn">Failed</button>
+          </div>
+        </div>
+        <div id="dashboard-tasks" class="space-y-2">
+          <div class="text-sm text-ink-400 py-10 text-center">Loading…</div>
+        </div>
+      </div>
+
+      <!-- ── TASK DETAIL ── -->
+      <div id="page-task-detail" class="page p-6 md:p-10 max-w-3xl mx-auto">
+        <button onclick="showPage('dashboard')" class="flex items-center gap-2 text-sm text-ink-400 hover:text-ink-700 mb-6 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          Back to dashboard
         </button>
+        <div id="task-detail-content"></div>
       </div>
 
-      <div class="flex gap-2 mb-5 flex-wrap">
-        <button onclick="filterTasks('all')" id="filter-all" class="tab-btn active">All</button>
-        <button onclick="filterTasks('SUCCESS')" id="filter-SUCCESS" class="tab-btn">Succeeded</button>
-        <button onclick="filterTasks('PENDING')" id="filter-PENDING" class="tab-btn">Pending</button>
-        <button onclick="filterTasks('STARTED')" id="filter-STARTED" class="tab-btn">Running</button>
-        <button onclick="filterTasks('FAILURE')" id="filter-FAILURE" class="tab-btn">Failed</button>
-      </div>
-
-      <div id="tasks-list" class="space-y-2">
-        <div class="text-sm text-ink-400 py-12 text-center">Loading tasks…</div>
-      </div>
-    </div>
-
-    <div id="page-task-detail" class="page p-6 md:p-10 max-w-3xl mx-auto animate-fade-in">
-      <button onclick="showPage('tasks')" class="flex items-center gap-2 text-sm text-ink-400 hover:text-ink-700 mb-6 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-        Back to tasks
-      </button>
-      <div id="task-detail-content"></div>
-    </div>
-
-    <div id="page-new-task" class="page p-6 md:p-10 max-w-2xl mx-auto animate-fade-in">
-      <div class="mb-6">
-        <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">New Task</h2>
-        <p class="text-sm text-ink-400 mt-0.5">Submit a background job to the queue</p>
-      </div>
-
-      <div class="card p-6 md:p-8">
+      <!-- ── NEW TASK ── -->
+      <div id="page-new-task" class="page p-6 md:p-10 max-w-2xl mx-auto">
         <div class="mb-6">
-          <label class="block text-xs font-500 text-ink-500 mb-2">Task type</label>
-          <div class="grid grid-cols-3 gap-2">
-            <button onclick="setTaskType('generate_report')" id="type-generate_report" class="type-btn p-3 rounded-xl border border-cream-200 text-center text-xs font-medium text-ink-600 hover:border-sage-300 hover:bg-sage-50 transition-all">
-              <svg class="w-5 h-5 mx-auto mb-1.5 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-              Report
-            </button>
-            <button onclick="setTaskType('process_data')" id="type-process_data" class="type-btn p-3 rounded-xl border border-cream-200 text-center text-xs font-medium text-ink-600 hover:border-sage-300 hover:bg-sage-50 transition-all">
-              <svg class="w-5 h-5 mx-auto mb-1.5 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16M8 11h8M8 15h5"/></svg>
-              Process Data
-            </button>
-            <button onclick="setTaskType('send_email')" id="type-send_email" class="type-btn p-3 rounded-xl border border-cream-200 text-center text-xs font-medium text-ink-600 hover:border-sage-300 hover:bg-sage-50 transition-all">
-              <svg class="w-5 h-5 mx-auto mb-1.5 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              Email
-            </button>
+          <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">New Task</h2>
+          <p class="text-sm text-ink-400 mt-0.5">Submit a background job to the queue</p>
+        </div>
+        <div class="card p-6 md:p-8">
+          <!-- Type picker -->
+          <div class="mb-6">
+            <label class="block text-xs font-medium text-ink-500 mb-2">Task type</label>
+            <div class="grid grid-cols-3 gap-2" id="type-picker">
+              <button onclick="setTaskType('generate_report')" id="type-generate_report" class="type-btn selected">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Report
+              </button>
+              <button onclick="setTaskType('process_data')" id="type-process_data" class="type-btn">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16M8 11h8M8 15h5"/></svg>
+                Process Data
+              </button>
+              <button onclick="setTaskType('send_email')" id="type-send_email" class="type-btn">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                Email
+              </button>
+            </div>
           </div>
+          <!-- Fields rendered here -->
+          <div id="task-fields" class="space-y-4"></div>
+          <button onclick="submitTask()" class="btn-primary w-full mt-6 flex items-center justify-center gap-2" id="submit-task-btn">
+            <span id="submit-task-text">Submit task</span>
+          </button>
         </div>
-
-        <div id="task-fields" class="space-y-4"></div>
-
-        <button onclick="submitTask()" class="btn-primary w-full mt-6 flex items-center justify-center gap-2" id="submit-task-btn">
-          <span id="submit-task-text">Submit task</span>
-        </button>
-      </div>
-    </div>
-
-    <div id="page-uploads" class="page p-6 md:p-10 max-w-3xl mx-auto animate-fade-in">
-      <div class="mb-6">
-        <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">CSV Uploads</h2>
-        <p class="text-sm text-ink-400 mt-0.5">Upload datasets to reference in tasks</p>
       </div>
 
-      <div class="card p-6 mb-6">
-        <div id="drop-zone" class="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-          <input type="file" id="file-input" accept=".csv" class="hidden" onchange="handleFileSelect(event)" />
-          <svg class="w-8 h-8 mx-auto mb-3 text-ink-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"/></svg>
-          <p class="text-sm font-medium text-ink-600">Drop a CSV file here</p>
-          <p class="text-xs text-ink-400 mt-1">or click to browse — max 10 MB</p>
+      <!-- ── UPLOADS ── -->
+      <div id="page-uploads" class="page p-6 md:p-10 max-w-3xl mx-auto">
+        <div class="mb-6">
+          <h2 class="text-2xl font-semibold text-ink-800 tracking-tight">CSV Uploads</h2>
+          <p class="text-sm text-ink-400 mt-0.5">Upload datasets to use in tasks — copy the ID to reference them</p>
         </div>
-        <div id="upload-progress" class="hidden mt-4">
-          <div class="flex items-center gap-3">
-            <div class="spinner" style="border-color:rgba(46,80,39,0.2);border-top-color:#2f5027;"></div>
+        <div class="card p-6 mb-6">
+          <div id="drop-zone" class="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+            <input type="file" id="file-input" accept=".csv" class="hidden" onchange="handleFileSelect(event)" />
+            <svg class="w-8 h-8 mx-auto mb-3 text-ink-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"/></svg>
+            <p class="text-sm font-medium text-ink-600">Drop a CSV file here</p>
+            <p class="text-xs text-ink-400 mt-1">or click to browse — max 10 MB</p>
+          </div>
+          <div id="upload-progress" class="hidden mt-4 flex items-center gap-3 px-2">
+            <div class="spinner-dark"></div>
             <span class="text-sm text-ink-600" id="upload-filename">Uploading…</span>
           </div>
         </div>
+        <div class="mb-3 flex items-center justify-between">
+          <p class="text-xs font-semibold text-ink-500 uppercase tracking-widest">Uploaded files</p>
+          <button onclick="loadUploads()" class="text-xs text-sage-500 hover:text-sage-700 font-medium">Refresh</button>
+        </div>
+        <div id="uploads-list" class="space-y-2">
+          <div class="text-sm text-ink-400 text-center py-8">No uploads this session.</div>
+        </div>
       </div>
 
-      <div class="mb-3 flex items-center justify-between">
-        <p class="text-xs font-semibold text-ink-500 uppercase tracking-widest">Uploaded files</p>
-        <button onclick="loadUploads()" class="text-xs text-sage-500 hover:text-sage-700 font-medium">Refresh</button>
-      </div>
-      <div id="uploads-list" class="space-y-2">
-        <div class="text-sm text-ink-400 text-center py-8">No uploads yet.</div>
-      </div>
-    </div>
-
-  </main>
+    </main>
+  </div>
 </div>
 
-<template id="tmpl-task-row">
-  <div class="card px-4 py-3.5 flex items-center gap-3 hover:border-sage-200 transition-colors cursor-pointer group task-row">
-    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 task-icon-wrap"></div>
-    <div class="flex-1 min-w-0">
-      <div class="flex items-center gap-2">
-        <span class="text-sm font-medium text-ink-700 task-type-label"></span>
-        <span class="badge task-status-badge"></span>
-      </div>
-      <p class="text-xs text-ink-400 font-mono truncate mt-0.5 task-id-text"></p>
-    </div>
-    <div class="text-right shrink-0">
-      <p class="text-xs text-ink-400 task-date"></p>
-    </div>
-    <svg class="w-4 h-4 text-ink-300 shrink-0 group-hover:text-sage-500 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-  </div>
-</template>
-
 <script>
-const API = window.location.origin; 
+// ─── CONFIG ─────────────────────────────────────────
+const API = ''; // set to 'http://localhost:8000' if needed
 let token = localStorage.getItem('asyncmaid_token') || null;
 let currentUser = localStorage.getItem('asyncmaid_email') || null;
 let allTasks = [];
 let uploads = [];
 let currentTaskType = 'generate_report';
-let currentFilter = 'all';
+let dashFilter = 'all';
 
-(function init() {
-  if (token) {
-    showApp();
-  }
-})();
+// ─── INIT ────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  if (token) showApp();
+});
 
+// ─── AUTH ────────────────────────────────────────────
 let authMode = 'login';
 
 function switchAuthTab(mode) {
@@ -419,257 +362,303 @@ async function handleAuth(e) {
   const btn = document.getElementById('auth-submit');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
-
   try {
     if (authMode === 'register') {
-      const res = await api('/auth/register', 'POST', { email, password });
+      const res = await apiCall('/auth/register', 'POST', { email, password });
       if (res._error) throw new Error(res._error);
-      showToast('Account created! Please sign in.', 'success');
+      showToast('Account created! Sign in now.', 'success');
       switchAuthTab('login');
+      document.getElementById('auth-password').value = '';
     } else {
       const form = new FormData();
       form.append('username', email);
       form.append('password', password);
       const res = await fetch(`${API}/auth/login`, { method: 'POST', body: form });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.detail || 'Login failed');
       token = data.access_token;
+      currentUser = email;
       localStorage.setItem('asyncmaid_token', token);
       localStorage.setItem('asyncmaid_email', email);
-      currentUser = email;
       showApp();
     }
   } catch (err) {
     showToast(err.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span id="auth-btn-text">' + (authMode === 'login' ? 'Sign in' : 'Create account') + '</span>';
+    btn.innerHTML = `<span id="auth-btn-text">${authMode === 'login' ? 'Sign in' : 'Create account'}</span>`;
   }
 }
 
 function showApp() {
-  document.getElementById('auth-screen').classList.add('hidden');
-  document.getElementById('app-shell').classList.remove('hidden');
+  document.getElementById('auth-screen').style.display = 'none';
+  const shell = document.getElementById('app-shell');
+  shell.style.display = 'block';
+  shell.classList.remove('hidden');
   const initials = (currentUser || 'U').split('@')[0].slice(0, 2).toUpperCase();
   document.getElementById('user-avatar-initials').textContent = initials;
   document.getElementById('user-email-display').textContent = currentUser || '';
   const name = (currentUser || '').split('@')[0];
   document.getElementById('dashboard-name').textContent = name ? name.charAt(0).toUpperCase() + name.slice(1) : '';
+  // Render task fields for default type now that DOM is ready
+  renderTaskFields('generate_report');
   loadDashboard();
+  startTokenWatcher();
+}
+
+// ─── TOKEN EXPIRY WATCHER ─────────────────────────────
+// Reads the exp claim from the JWT and silently logs out before it expires,
+// showing a clear message so the user isn't confused by a 401.
+function getTokenExp(jwt) {
+  try {
+    const payload = JSON.parse(atob(jwt.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    return payload.exp ? payload.exp * 1000 : null; // convert to ms
+  } catch { return null; }
+}
+
+let _tokenWatcherTimer = null;
+function startTokenWatcher() {
+  clearTimeout(_tokenWatcherTimer);
+  if (!token) return;
+  const exp = getTokenExp(token);
+  if (!exp) return; // no exp claim — nothing to watch
+  const now = Date.now();
+  const msLeft = exp - now;
+  if (msLeft <= 0) { logout(); return; }
+  // Warn at 60 seconds before expiry, then logout at expiry
+  const warnAt = Math.max(msLeft - 60_000, 0);
+  _tokenWatcherTimer = setTimeout(() => {
+    showToast('Session expiring soon — please save your work.', '');
+    // Hard logout at actual expiry
+    setTimeout(() => {
+      showToast('Session expired. Please sign in again.', 'error');
+      logout();
+    }, Math.min(msLeft - warnAt, 60_000));
+  }, warnAt);
 }
 
 function logout() {
-  token = null;
+  token = null; currentUser = null; allTasks = []; uploads = [];
   localStorage.removeItem('asyncmaid_token');
   localStorage.removeItem('asyncmaid_email');
-  currentUser = null;
-  document.getElementById('app-shell').classList.add('hidden');
-  document.getElementById('auth-screen').classList.remove('hidden');
+  document.getElementById('app-shell').style.display = 'none';
+  document.getElementById('auth-screen').style.display = '';
 }
 
+// ─── NAVIGATION ──────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const page = document.getElementById(`page-${name}`);
+  const page = document.getElementById('page-' + name);
   if (page) page.classList.add('active');
-  const nav = document.querySelector(`[data-page="${name}"]`);
+  const nav = document.querySelector('[data-page="' + name + '"]');
   if (nav) nav.classList.add('active');
-
   if (name === 'dashboard') loadDashboard();
-  if (name === 'tasks') loadTasks();
   if (name === 'uploads') loadUploads();
-  if (name === 'new-task') renderTaskFields(currentTaskType);
+  // When navigating to new-task via sidebar, re-sync the type button highlight
+  if (name === 'new-task') {
+    // Use setTimeout so the page is visible before we touch its buttons
+    setTimeout(() => syncTypeButtons(currentTaskType), 0);
+  }
 }
 
-async function api(path, method = 'GET', body = null) {
-  const opts = {
-    method,
-    headers: { 'Content-Type': 'application/json' }
-  };
-  if (token) opts.headers['Authorization'] = `Bearer ${token}`;
+// Sync type button highlights without re-rendering fields (call after page is shown)
+function syncTypeButtons(type) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+  const btn = document.getElementById('type-' + type);
+  if (btn) btn.classList.add('selected');
+}
+
+// Navigate to new-task with a pre-selected type
+function goNewTask(type) {
+  showPage('new-task');  // show page first so type-btn elements are visible
+  setTaskType(type);     // highlight button + render fields (no recursion — setTaskType->renderTaskFields only)
+}
+
+// ─── API HELPER ──────────────────────────────────────
+async function apiCall(path, method = 'GET', body = null) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  if (token) opts.headers['Authorization'] = 'Bearer ' + token;
   if (body) opts.body = JSON.stringify(body);
   try {
-    const res = await fetch(`${API}${path}`, opts);
+    const res = await fetch(API + path, opts);
     const data = await res.json().catch(() => ({}));
-    if (res.status === 401) { logout(); return { _error: 'Session expired' }; }
-    if (!res.ok) return { _error: data.detail || `Error ${res.status}` };
+    if (res.status === 401) { logout(); return { _error: 'Session expired — please sign in again' }; }
+    if (!res.ok) return { _error: data.detail || ('Error ' + res.status) };
     return data;
   } catch (err) {
     return { _error: 'Network error — is the server running?' };
   }
 }
 
+// ─── DASHBOARD ───────────────────────────────────────
 async function loadDashboard() {
-  const tasks = await api('/tasks/my-tasks?limit=50');
+  const tasks = await apiCall('/tasks/my-tasks?limit=100');
   if (tasks._error) { showToast(tasks._error, 'error'); return; }
   allTasks = tasks;
 
-  const total = tasks.length;
-  const success = tasks.filter(t => t.status === 'SUCCESS').length;
-  const running = tasks.filter(t => ['STARTED', 'PENDING'].includes(t.status)).length;
-  const failed = tasks.filter(t => t.status === 'FAILURE').length;
+  document.getElementById('metric-total').textContent = tasks.length;
+  document.getElementById('metric-success').textContent = tasks.filter(t => t.status === 'SUCCESS').length;
+  document.getElementById('metric-running').textContent = tasks.filter(t => ['STARTED','PENDING'].includes(t.status)).length;
+  document.getElementById('metric-failed').textContent = tasks.filter(t => t.status === 'FAILURE').length;
 
-  document.getElementById('metric-total').textContent = total;
-  document.getElementById('metric-success').textContent = success;
-  document.getElementById('metric-running').textContent = running;
-  document.getElementById('metric-failed').textContent = failed;
+  renderDashTasks();
+}
 
-  const recent = tasks.slice(0, 5);
-  const el = document.getElementById('dashboard-recent');
-  if (!recent.length) { el.innerHTML = '<p class="text-sm text-ink-400 py-8 text-center">No tasks yet — create one to get started.</p>'; return; }
+function filterDash(f) {
+  dashFilter = f;
+  document.querySelectorAll('[id^="df-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById('df-' + f).classList.add('active');
+  renderDashTasks();
+}
+
+function renderDashTasks() {
+  const el = document.getElementById('dashboard-tasks');
+  const filtered = dashFilter === 'all' ? allTasks : allTasks.filter(t => t.status === dashFilter);
+  if (!filtered.length) {
+    el.innerHTML = '<p class="text-sm text-ink-400 py-10 text-center">' + (allTasks.length ? 'No tasks match this filter.' : 'No tasks yet — create one above!') + '</p>';
+    return;
+  }
   el.innerHTML = '';
-  recent.forEach(t => el.appendChild(buildTaskRow(t)));
-}
-
-async function loadTasks() {
-  document.getElementById('tasks-list').innerHTML = '<div class="text-sm text-ink-400 py-12 text-center">Loading…</div>';
-  const tasks = await api('/tasks/my-tasks?limit=100');
-  if (tasks._error) { showToast(tasks._error, 'error'); return; }
-  allTasks = tasks;
-  renderTasksList();
-}
-
-function filterTasks(f) {
-  currentFilter = f;
-  document.querySelectorAll('[id^="filter-"]').forEach(b => b.classList.remove('active'));
-  document.getElementById(`filter-${f}`).classList.add('active');
-  renderTasksList();
-}
-
-function renderTasksList() {
-  const list = document.getElementById('tasks-list');
-  const filtered = currentFilter === 'all' ? allTasks : allTasks.filter(t => t.status === currentFilter);
-  if (!filtered.length) { list.innerHTML = '<p class="text-sm text-ink-400 py-12 text-center">No tasks found.</p>'; return; }
-  list.innerHTML = '';
-  filtered.forEach(t => list.appendChild(buildTaskRow(t)));
+  filtered.forEach(t => el.appendChild(buildTaskRow(t)));
 }
 
 function buildTaskRow(task) {
-  const tmpl = document.getElementById('tmpl-task-row').content.cloneNode(true);
-  const row = tmpl.querySelector('.task-row');
-  row.onclick = () => openTask(task.id);
-
-  const iconWrap = tmpl.querySelector('.task-icon-wrap');
-  const icons = {
-    generate_report: { bg: 'bg-sage-100', svg: '<svg class="w-4 h-4 text-sage-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>' },
-    process_data: { bg: 'bg-cream-200', svg: '<svg class="w-4 h-4 text-ink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16"/></svg>' },
-    send_email: { bg: 'bg-blush-100', svg: '<svg class="w-4 h-4 text-blush-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>' },
+  const iconMap = {
+    generate_report: { bg:'bg-sage-100',  svg:'<svg class="w-4 h-4 text-sage-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>' },
+    process_data:    { bg:'bg-cream-200', svg:'<svg class="w-4 h-4 text-ink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16"/></svg>' },
+    send_email:      { bg:'bg-blush-100', svg:'<svg class="w-4 h-4 text-blush-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>' },
   };
-  const iconDef = icons[task.task_type] || { bg: 'bg-cream-200', svg: '' };
-  iconWrap.className += ' ' + iconDef.bg;
-  iconWrap.innerHTML = iconDef.svg;
+  const icon = iconMap[task.task_type] || { bg:'bg-cream-200', svg:'' };
 
-  tmpl.querySelector('.task-type-label').textContent = typeLabel(task.task_type);
-
-  const badge = tmpl.querySelector('.task-status-badge');
-  badge.textContent = task.status;
-  badge.classList.add(statusClass(task.status));
-
-  tmpl.querySelector('.task-id-text').textContent = task.id;
-  tmpl.querySelector('.task-date').textContent = formatDate(task.created_at);
-
-  return tmpl;
+  const row = document.createElement('div');
+  row.className = 'card task-row px-4 py-3.5 flex items-center gap-3 group';
+  row.onclick = () => openTask(task.id);
+  row.innerHTML = `
+    <div class="w-8 h-8 rounded-lg ${icon.bg} flex items-center justify-center shrink-0">${icon.svg}</div>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-medium text-ink-700">${typeLabel(task.task_type)}</span>
+        <span class="badge ${statusClass(task.status)}">${task.status}</span>
+      </div>
+      <p class="text-xs text-ink-400 font-mono truncate mt-0.5">${task.id}</p>
+    </div>
+    <div class="text-right shrink-0">
+      <p class="text-xs text-ink-400">${formatDate(task.created_at)}</p>
+    </div>
+    <svg class="w-4 h-4 text-ink-200 shrink-0 group-hover:text-sage-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
+  return row;
 }
 
+// ─── TASK DETAIL ─────────────────────────────────────
 async function openTask(id) {
   showPage('task-detail');
   const el = document.getElementById('task-detail-content');
-  el.innerHTML = '<div class="text-sm text-ink-400 py-8">Loading…</div>';
-  const task = await api(`/tasks/${id}`);
-  if (task._error) { el.innerHTML = `<p class="text-sm text-blush-500">${task._error}</p>`; return; }
+  el.innerHTML = '<div class="flex items-center gap-3 py-10 text-sm text-ink-400"><div class="spinner-dark"></div> Loading…</div>';
 
-  const resultHtml = task.result ? `<div class="mt-6"><p class="text-xs font-semibold text-ink-500 uppercase tracking-widest mb-2">Result</p><div class="result-block">${JSON.stringify(task.result, null, 2)}</div></div>` : '';
-  const errorHtml = task.error ? `<div class="mt-4 p-3 rounded-xl bg-blush-100 border border-blush-200"><p class="text-xs text-blush-500 font-medium mb-1">Error</p><p class="text-sm text-blush-500 font-mono">${task.error}</p></div>` : '';
-  const completedHtml = task.completed_at ? `<div><p class="text-xs text-ink-400">Completed</p><p class="text-sm font-medium text-ink-700">${formatDate(task.completed_at)}</p></div>` : '';
+  const task = await apiCall('/tasks/' + id);
+  if (task._error) { el.innerHTML = '<p class="text-sm text-blush-500 py-4">' + task._error + '</p>'; return; }
+
+  const resultHtml = task.result
+    ? `<div class="mt-6"><p class="text-xs font-semibold text-ink-500 uppercase tracking-widest mb-2">Result</p><div class="result-block">${escHtml(JSON.stringify(task.result, null, 2))}</div></div>`
+    : '';
+  const errorHtml = task.error
+    ? `<div class="mt-4 p-4 rounded-xl bg-blush-100 border border-blush-200"><p class="text-xs text-blush-500 font-semibold mb-1">Error</p><p class="text-sm text-blush-500 font-mono">${escHtml(task.error)}</p></div>`
+    : '';
 
   el.innerHTML = `
-    <div class="flex items-start justify-between mb-6">
-      <div>
+    <div class="flex items-start justify-between mb-6 gap-4">
+      <div class="min-w-0">
         <h3 class="text-xl font-semibold text-ink-800">${typeLabel(task.task_type)}</h3>
-        <p class="text-xs font-mono text-ink-400 mt-1">${task.id}</p>
+        <p class="text-xs font-mono text-ink-400 mt-1 break-all">${task.id}</p>
       </div>
-      <span class="badge text-sm ${statusClass(task.status)} mt-1">${task.status}</span>
+      <span class="badge ${statusClass(task.status)} shrink-0 mt-1">${task.status}</span>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-2">
-      <div class="metric-card"><p class="text-xs text-ink-400">Type</p><p class="text-sm font-medium text-ink-700 mt-0.5">${typeLabel(task.task_type)}</p></div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
       <div class="metric-card"><p class="text-xs text-ink-400">Created</p><p class="text-sm font-medium text-ink-700 mt-0.5">${formatDate(task.created_at)}</p></div>
-      ${completedHtml ? `<div class="metric-card">${completedHtml}</div>` : ''}
+      ${task.completed_at ? `<div class="metric-card"><p class="text-xs text-ink-400">Completed</p><p class="text-sm font-medium text-ink-700 mt-0.5">${formatDate(task.completed_at)}</p></div>` : ''}
+      <div class="metric-card"><p class="text-xs text-ink-400">Type</p><p class="text-sm font-medium text-ink-700 mt-0.5">${typeLabel(task.task_type)}</p></div>
     </div>
     ${errorHtml}
     ${resultHtml}
-    <div class="mt-6 flex gap-2">
-      <button onclick="deleteTask('${task.id}')" class="btn-ghost text-blush-500 border-blush-200 hover:bg-blush-100 flex items-center gap-2 text-xs">
+    <div class="mt-6">
+      <button onclick="confirmDelete('${task.id}')" class="btn-ghost text-blush-500 border-blush-200 hover:bg-blush-100 hover:border-blush-300 text-xs">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
         Delete task
       </button>
-    </div>
-  `;
+    </div>`;
 }
 
-async function deleteTask(id) {
+async function confirmDelete(id) {
   if (!confirm('Delete this task? This cannot be undone.')) return;
-  const res = await api(`/tasks/${id}`, 'DELETE');
+  const res = await apiCall('/tasks/' + id, 'DELETE');
   if (res && res._error) { showToast(res._error, 'error'); return; }
   showToast('Task deleted.', 'success');
-  showPage('tasks');
+  showPage('dashboard');
 }
 
+// ─── NEW TASK ────────────────────────────────────────
+// setTaskType: ONLY updates state + button highlight, does NOT call renderTaskFields
 function setTaskType(type) {
   currentTaskType = type;
-  document.querySelectorAll('.type-btn').forEach(b => {
-    b.classList.remove('border-sage-400', 'bg-sage-50', 'text-sage-700');
-  });
-  const active = document.getElementById(`type-${type}`);
-  if (active) active.classList.add('border-sage-400', 'bg-sage-50', 'text-sage-700');
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+  const btn = document.getElementById('type-' + type);
+  if (btn) btn.classList.add('selected');
   renderTaskFields(type);
 }
 
+// renderTaskFields: ONLY renders fields DOM, does NOT call setTaskType
 function renderTaskFields(type) {
-  setTaskType(type);
   const el = document.getElementById('task-fields');
+  if (!el) return; // guard: DOM not ready yet
+
   if (type === 'generate_report') {
     el.innerHTML = `
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Report name <span class="text-ink-300">(optional)</span></label>
-        <input type="text" id="field-name" class="input-base" placeholder="Q3 Operations Report" />
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Report name <span class="text-ink-300">(optional)</span></label>
+        <input type="text" id="f-name" class="input-base" placeholder="Q3 Operations Report" />
       </div>
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Summary <span class="text-ink-300">(optional)</span></label>
-        <textarea id="field-summary" class="input-base" placeholder="Brief overview for the executive summary…"></textarea>
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Summary <span class="text-ink-300">(optional)</span></label>
+        <textarea id="f-summary" class="input-base" placeholder="Brief overview for the executive summary…"></textarea>
       </div>
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Upload ID <span class="text-ink-300">(optional — use a CSV upload as source)</span></label>
-        <input type="text" id="field-upload-id" class="input-base font-mono text-sm" placeholder="uuid from your uploads" />
-        <p class="text-xs text-ink-400 mt-1">Leave blank to use manual metrics below instead.</p>
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Upload ID <span class="text-ink-300">(optional — use a CSV as source)</span></label>
+        <input type="text" id="f-upload-id" class="input-base font-mono text-sm" placeholder="Paste UUID from Uploads page" />
       </div>
-      <div id="manual-metrics-section">
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Metrics <span class="text-ink-300">(comma-separated numbers)</span></label>
-        <input type="text" id="field-metrics" class="input-base font-mono" placeholder="142, 98, 201, 176" />
+      <div>
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Metrics <span class="text-ink-300">(comma-separated numbers, if no upload)</span></label>
+        <input type="text" id="f-metrics" class="input-base font-mono" placeholder="142, 98, 201, 176" />
       </div>`;
+
   } else if (type === 'process_data') {
     el.innerHTML = `
+      <div class="p-4 rounded-xl bg-cream-100 border border-cream-300 flex items-start gap-3">
+        <svg class="w-4 h-4 text-ink-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>
+        <p class="text-xs text-ink-500 leading-relaxed">You need a CSV upload ID. Go to <button type="button" onclick="showPage('uploads')" class="text-sage-600 font-medium underline underline-offset-2">Uploads</button>, upload your file, then copy its ID and paste it below.</p>
+      </div>
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Upload ID <span class="text-ink-400">*</span></label>
-        <input type="text" id="field-upload-id" class="input-base font-mono text-sm" placeholder="UUID of an uploaded CSV file" required />
-        <p class="text-xs text-ink-400 mt-1">Upload a CSV file first from the <button onclick="showPage('uploads')" class="text-sage-500 underline">Uploads</button> page.</p>
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Upload ID <span class="text-blush-400">*</span></label>
+        <input type="text" id="f-upload-id" class="input-base font-mono text-sm" placeholder="e.g. 3f2a1b4c-…" />
       </div>`;
+
   } else if (type === 'send_email') {
     el.innerHTML = `
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Recipient email <span class="text-ink-400">*</span></label>
-        <input type="email" id="field-email" class="input-base" placeholder="recipient@example.com" required />
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Recipient email <span class="text-blush-400">*</span></label>
+        <input type="email" id="f-email" class="input-base" placeholder="recipient@example.com" />
       </div>
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Subject</label>
-        <input type="text" id="field-subject" class="input-base" placeholder="Your analytics update is ready" />
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Subject <span class="text-ink-300">(optional)</span></label>
+        <input type="text" id="f-subject" class="input-base" placeholder="Your analytics update is ready" />
       </div>
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Message</label>
-        <textarea id="field-body" class="input-base" placeholder="Your workflow has completed successfully…"></textarea>
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Message <span class="text-ink-300">(optional)</span></label>
+        <textarea id="f-body" class="input-base" placeholder="Your workflow has completed successfully…"></textarea>
       </div>
       <div>
-        <label class="block text-xs font-500 text-ink-500 mb-1.5">Related task ID <span class="text-ink-300">(optional)</span></label>
-        <input type="text" id="field-related-task" class="input-base font-mono text-sm" placeholder="Attach a task result to this email" />
+        <label class="block text-xs font-medium text-ink-500 mb-1.5">Related task ID <span class="text-ink-300">(optional — attach a task result)</span></label>
+        <input type="text" id="f-related-task" class="input-base font-mono text-sm" placeholder="UUID of a completed task" />
       </div>`;
   }
 }
@@ -677,75 +666,99 @@ function renderTaskFields(type) {
 async function submitTask() {
   const btn = document.getElementById('submit-task-btn');
   const txt = document.getElementById('submit-task-text');
-  btn.disabled = true;
-  txt.innerHTML = '<span class="spinner inline-block mr-2"></span> Submitting…';
 
   let payload = {};
-  try {
-    if (currentTaskType === 'generate_report') {
-      const name = document.getElementById('field-name')?.value.trim();
-      const summary = document.getElementById('field-summary')?.value.trim();
-      const uploadId = document.getElementById('field-upload-id')?.value.trim();
-      const metricsRaw = document.getElementById('field-metrics')?.value.trim();
-      if (name) payload.name = name;
-      if (summary) payload.summary = summary;
-      if (uploadId) {
-        payload.upload_id = uploadId;
-      } else if (metricsRaw) {
-        payload.metrics = metricsRaw.split(',').map(s => ({ value: parseFloat(s.trim()) })).filter(m => !isNaN(m.value));
-      }
-    } else if (currentTaskType === 'process_data') {
-      const uploadId = document.getElementById('field-upload-id')?.value.trim();
-      if (!uploadId) { showToast('Upload ID is required.', 'error'); return; }
+
+  // Validate & build payload per type
+  if (currentTaskType === 'generate_report') {
+    const name     = document.getElementById('f-name')?.value.trim() || '';
+    const summary  = document.getElementById('f-summary')?.value.trim() || '';
+    const uploadId = document.getElementById('f-upload-id')?.value.trim() || '';
+    const mRaw     = document.getElementById('f-metrics')?.value.trim() || '';
+    if (name) payload.name = name;
+    if (summary) payload.summary = summary;
+    if (uploadId) {
       payload.upload_id = uploadId;
-    } else if (currentTaskType === 'send_email') {
-      const email = document.getElementById('field-email')?.value.trim();
-      if (!email || !email.includes('@')) { showToast('A valid email is required.', 'error'); return; }
-      payload.email = email;
-      const subject = document.getElementById('field-subject')?.value.trim();
-      const body = document.getElementById('field-body')?.value.trim();
-      const related = document.getElementById('field-related-task')?.value.trim();
-      if (subject) payload.subject = subject;
-      if (body) payload.message = body;
-      if (related) payload.related_task_id = related;
+    } else if (mRaw) {
+      const nums = mRaw.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+      if (nums.length) payload.metrics = nums.map(v => ({ value: v }));
     }
 
-    const res = await api('/tasks', 'POST', { task_type: currentTaskType, payload });
+  } else if (currentTaskType === 'process_data') {
+    const uploadId = document.getElementById('f-upload-id')?.value.trim() || '';
+    if (!uploadId) {
+      showToast('Please enter an Upload ID. Upload a CSV first from the Uploads page.', 'error');
+      return;
+    }
+    payload.upload_id = uploadId;
+
+  } else if (currentTaskType === 'send_email') {
+    const email = document.getElementById('f-email')?.value.trim() || '';
+    if (!email) {
+      showToast('Recipient email is required.', 'error');
+      document.getElementById('f-email')?.focus();
+      return;
+    }
+    if (!email.includes('@')) {
+      showToast('Please enter a valid email address.', 'error');
+      document.getElementById('f-email')?.focus();
+      return;
+    }
+    payload.email = email;
+    const subject = document.getElementById('f-subject')?.value.trim() || '';
+    const body    = document.getElementById('f-body')?.value.trim() || '';
+    const related = document.getElementById('f-related-task')?.value.trim() || '';
+    if (subject) payload.subject = subject;
+    if (body) payload.message = body;
+    if (related) payload.related_task_id = related;
+  }
+
+  btn.disabled = true;
+  txt.innerHTML = '<span class="spinner mr-1.5"></span>Submitting…';
+
+  try {
+    const res = await apiCall('/tasks', 'POST', { task_type: currentTaskType, payload });
     if (res._error) { showToast(res._error, 'error'); return; }
-    showToast('Task submitted!', 'success');
-    showPage('tasks');
+    showToast('Task submitted successfully!', 'success');
+    // Reset form
+    renderTaskFields(currentTaskType);
+    showPage('dashboard');
   } finally {
     btn.disabled = false;
     txt.textContent = 'Submit task';
   }
 }
 
-async function loadUploads() {
-  const el = document.getElementById('uploads-list');
-  if (!uploads.length) {
-    el.innerHTML = '<p class="text-sm text-ink-400 py-8 text-center">No uploads this session — upload a CSV to get started.</p>';
-  } else {
-    renderUploadsList();
-  }
+// ─── UPLOADS ─────────────────────────────────────────
+function loadUploads() {
+  if (uploads.length) renderUploadsList();
 }
 
 function renderUploadsList() {
   const el = document.getElementById('uploads-list');
+  if (!el) return;
+  if (!uploads.length) {
+    el.innerHTML = '<p class="text-sm text-ink-400 py-8 text-center">No uploads this session.</p>';
+    return;
+  }
   el.innerHTML = '';
   uploads.forEach(u => {
     const div = document.createElement('div');
     div.className = 'card px-4 py-3.5 flex items-center gap-3';
     div.innerHTML = `
       <div class="w-8 h-8 rounded-lg bg-cream-200 flex items-center justify-center shrink-0">
-        <svg class="w-4 h-4 text-ink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <svg class="w-4 h-4 text-ink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
       </div>
       <div class="flex-1 min-w-0">
-        <p class="text-sm font-medium text-ink-700 truncate">${u.original_filename}</p>
-        <p class="text-xs text-ink-400 font-mono">${u.id}</p>
+        <p class="text-sm font-medium text-ink-700 truncate">${escHtml(u.original_filename)}</p>
+        <p class="text-xs text-ink-400 font-mono truncate">${u.id}</p>
       </div>
-      <div class="text-right shrink-0">
-        <p class="text-xs text-ink-500">${formatBytes(u.size_bytes)}</p>
-        <button onclick="copyToClipboard('${u.id}')" class="text-xs text-sage-500 hover:text-sage-700 mt-0.5">Copy ID</button>
+      <div class="text-right shrink-0 flex flex-col items-end gap-1">
+        <p class="text-xs text-ink-400">${formatBytes(u.size_bytes)}</p>
+        <button onclick="copyId('${u.id}')" class="text-xs text-sage-500 hover:text-sage-700 font-medium flex items-center gap-1">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy ID
+        </button>
       </div>`;
     el.appendChild(div);
   });
@@ -753,77 +766,76 @@ function renderUploadsList() {
 
 function handleDragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
 function handleDragLeave() { document.getElementById('drop-zone').classList.remove('drag-over'); }
-function handleDrop(e) { e.preventDefault(); document.getElementById('drop-zone').classList.remove('drag-over'); const files = e.dataTransfer.files; if (files.length) uploadFile(files[0]); }
+function handleDrop(e) { e.preventDefault(); document.getElementById('drop-zone').classList.remove('drag-over'); if (e.dataTransfer.files.length) uploadFile(e.dataTransfer.files[0]); }
 function handleFileSelect(e) { if (e.target.files.length) uploadFile(e.target.files[0]); }
 
 async function uploadFile(file) {
-  if (!file.name.toLowerCase().endsWith('.csv')) { showToast('Only CSV files are allowed.', 'error'); return; }
-  if (file.size > 10 * 1024 * 1024) { showToast('File exceeds 10 MB limit.', 'error'); return; }
+  if (!file.name.toLowerCase().endsWith('.csv')) { showToast('Only .csv files are allowed.', 'error'); return; }
+  if (file.size > 10 * 1024 * 1024) { showToast('File exceeds the 10 MB limit.', 'error'); return; }
+  if (file.size === 0) { showToast('File is empty.', 'error'); return; }
 
-  const progress = document.getElementById('upload-progress');
-  const fname = document.getElementById('upload-filename');
-  progress.classList.remove('hidden');
-  fname.textContent = `Uploading ${file.name}…`;
+  const prog = document.getElementById('upload-progress');
+  document.getElementById('upload-filename').textContent = 'Uploading ' + file.name + '…';
+  prog.classList.remove('hidden');
 
   const form = new FormData();
   form.append('file', file);
-
   try {
-    const res = await fetch(`${API}/tasks/uploads`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` },
-      body: form,
-    });
+    const res = await fetch(API + '/tasks/uploads', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token }, body: form });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) { showToast(data.detail || 'Upload failed', 'error'); return; }
+    if (!res.ok) { showToast(data.detail || 'Upload failed.', 'error'); return; }
     uploads.unshift(data);
-    showToast(`${file.name} uploaded!`, 'success');
+    showToast(file.name + ' uploaded! Copy its ID to use in a task.', 'success');
     renderUploadsList();
-  } catch (err) {
+  } catch {
     showToast('Network error during upload.', 'error');
   } finally {
-    progress.classList.add('hidden');
+    prog.classList.add('hidden');
     document.getElementById('file-input').value = '';
   }
 }
 
+// ─── UTILITIES ───────────────────────────────────────
 function typeLabel(t) {
-  return { generate_report: 'Generate Report', process_data: 'Process Data', send_email: 'Send Email' }[t] || t;
+  return { generate_report:'Generate Report', process_data:'Process Data', send_email:'Send Email' }[t] || t;
 }
-
 function statusClass(s) {
-  return { PENDING: 'badge-pending', STARTED: 'badge-started', SUCCESS: 'badge-success', FAILURE: 'badge-failure' }[s] || 'badge-pending';
+  return { PENDING:'badge-pending', STARTED:'badge-started', SUCCESS:'badge-success', FAILURE:'badge-failure' }[s] || 'badge-pending';
 }
-
 function formatDate(iso) {
   if (!iso) return '—';
-  return new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return new Date(iso).toLocaleString(undefined, { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
 }
-
 function formatBytes(b) {
   if (!b) return '0 B';
-  if (b < 1024) return `${b} B`;
-  if (b < 1024 * 1024) return `${(b / 1024).toFixed(1)} KB`;
-  return `${(b / 1024 / 1024).toFixed(1)} MB`;
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(1) + ' MB';
+}
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function copyId(text) {
+  navigator.clipboard.writeText(text).then(() => showToast('ID copied to clipboard!', 'success'));
 }
 
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
-}
-
-let toastTimer;
-function showToast(msg, type = '') {
-  clearTimeout(toastTimer);
-  const existing = document.querySelector('.toast');
-  if (existing) existing.remove();
+let _toastTimer;
+function showToast(msg, type) {
+  clearTimeout(_toastTimer);
+  const old = document.querySelector('.toast');
+  if (old) old.remove();
   const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.textContent = msg;
+  el.className = 'toast' + (type ? ' ' + type : '');
+  // Icon
+  const iconSvg = type === 'success'
+    ? '<svg style="width:16px;height:16px;flex-shrink:0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
+    : type === 'error'
+    ? '<svg style="width:16px;height:16px;flex-shrink:0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>'
+    : '<svg style="width:16px;height:16px;flex-shrink:0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>';
+  el.innerHTML = iconSvg + '<span>' + escHtml(msg) + '</span>';
   document.body.appendChild(el);
-  toastTimer = setTimeout(() => el.remove(), 3500);
+  _toastTimer = setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; setTimeout(() => el.remove(), 300); }, 4000);
 }
-
-setTaskType('generate_report');
 </script>
 </body>
 </html>
